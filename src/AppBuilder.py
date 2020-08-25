@@ -29,5 +29,6 @@ def outputln(text_to_output):
 def output(text_to_output):
     display.insert(END, f'{text_to_output}', 'big')
 
+
 tkWindow.mainloop()
 
