@@ -6,6 +6,8 @@ prompts = []
 
 # add you code to the run method below:
 def run():
+    done = False
+    status = "Welcome to the Game"
     while True:
         turn = 'X'
         count = 0
@@ -14,7 +16,13 @@ def run():
         for i in range(10):
             printBoard(theBoard)
 
-            move = simpledialog.askstring("Player " + turn, "Enter your move")
+            status = f"Player {turn}"
+            move = simpledialog.askstring(status, "Enter your move")
+
+            # user clicks the Cancel button exit the for loop
+            if move is None:
+                done = True
+                break
 
             if theBoard[move] == ' ':
                 theBoard[move] = turn
@@ -27,50 +35,41 @@ def run():
             if count >= 5:
                 if theBoard['7'] == theBoard['8'] == theBoard['9'] != ' ':  # across the top
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['4'] == theBoard['5'] == theBoard['6'] != ' ':  # across the middle
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['1'] == theBoard['2'] == theBoard['3'] != ' ':  # across the bottom
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['1'] == theBoard['4'] == theBoard['7'] != ' ':  # down the left side
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['2'] == theBoard['5'] == theBoard['8'] != ' ':  # down the middle
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['3'] == theBoard['6'] == theBoard['9'] != ' ':  # down the right side
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['7'] == theBoard['5'] == theBoard['3'] != ' ':  # diagonal
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
                 elif theBoard['1'] == theBoard['5'] == theBoard['9'] != ' ':  # diagonal
                     printBoard(theBoard)
-                    outputln("\nGame Over.\n")
-                    outputln(" **** " + turn + " won. ****")
+                    status = f"Player {turn} won!"
                     break
-            print(count)
+
             # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
             if count == 9:
                 printBoard(theBoard)
-                outputln("\nGame Over.\n")
-                outputln("It's a Tie!!")
+                status = "Game Over.  It's a Tie!!"
                 break
 
             # Now we have to change the player after every move.
@@ -79,8 +78,14 @@ def run():
             else:
                 turn = 'X'
 
+        # user clicked the Cancel button so stop the game
+        if done:
+            clearOutput()
+            break
+
         # Now we will ask if player wants to restart the game or not.
-        restart = simpledialog.askstring("", "Do you want to play again? (y/n)")
+        restart = simpledialog.askstring(status, "Do you want to play again? (y/n)")
+
         if restart == "y" or restart == "Y":
             clearOutput()
             clearBoard()
@@ -118,14 +123,14 @@ def clearBoard():
 def printBoard(board):
     clearOutput()
     outputln("\n\n\n\n\n\n\n")
-    outputln("7|8|9|")
-    outputln("4|5|6|")
-    outputln("1|2|3|\n")
-    outputln(board['7'] + '|' + board['8'] + '|' + board['9'] + '|')
-    outputln('-+-+-+')
-    outputln(board['4'] + '|' + board['5'] + '|' + board['6'] + '|')
-    outputln('-+-+-+')
-    outputln(board['1'] + '|' + board['2'] + '|' + board['3'] + '|')
+    outputln("7|8|9")
+    outputln("4|5|6")
+    outputln("1|2|3\n")
+    outputln(board['7'] + '|' + board['8'] + '|' + board['9'])
+    outputln('-+-+-')
+    outputln(board['4'] + '|' + board['5'] + '|' + board['6'])
+    outputln('-+-+-')
+    outputln(board['1'] + '|' + board['2'] + '|' + board['3'])
 
 # **************** DO NOT CHANGE ANYTHING BELOW THIS LINE **********************
 root = Tk()
@@ -135,11 +140,12 @@ root.title('AppBuilder')
 fields = [None] * len(prompts)
 row_num = 0
 
-for prompt in prompts:
+for index, prompt in enumerate(prompts):
     label = Label(root, text=prompt)
-    label.grid(row=row_num, column=0, sticky=E, pady=2)
-    fields[row_num] = Entry(root, textvariable=f"{row_num}", width=100)
-    fields[row_num].grid(row=row_num, column=1, pady=2)
+    label.grid(row=row_num, column=0, pady=2, sticky=W)
+    row_num += 2
+    fields[index] = Entry(root, textvariable=f"{index}", width=100)
+    fields[index].grid(row=row_num, column=0, pady=2, sticky=W)
     row_num += 1
 
 def clearOutput():
