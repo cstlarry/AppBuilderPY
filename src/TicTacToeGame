@@ -1,0 +1,169 @@
+from tkinter import *
+from tkinter import simpledialog
+
+# Example of how to use the line below: prompts = ["Enter Wage", "Enter Hours Worked"]
+prompts = []
+
+# add you code to the run method below:
+def run():
+    while True:
+        turn = 'X'
+        count = 0
+        clearBoard()
+
+        for i in range(10):
+            printBoard(theBoard)
+
+            move = simpledialog.askstring("Player " + turn, "Enter your move")
+
+            if theBoard[move] == ' ':
+                theBoard[move] = turn
+                count += 1
+            else:
+                outputln("That place is already filled.\nMove to which place?")
+                continue
+
+            # Now we will check if player X or O has won,for every move after 5 moves.
+            if count >= 5:
+                if theBoard['7'] == theBoard['8'] == theBoard['9'] != ' ':  # across the top
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['4'] == theBoard['5'] == theBoard['6'] != ' ':  # across the middle
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['1'] == theBoard['2'] == theBoard['3'] != ' ':  # across the bottom
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['1'] == theBoard['4'] == theBoard['7'] != ' ':  # down the left side
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['2'] == theBoard['5'] == theBoard['8'] != ' ':  # down the middle
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['3'] == theBoard['6'] == theBoard['9'] != ' ':  # down the right side
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['7'] == theBoard['5'] == theBoard['3'] != ' ':  # diagonal
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+                elif theBoard['1'] == theBoard['5'] == theBoard['9'] != ' ':  # diagonal
+                    printBoard(theBoard)
+                    outputln("\nGame Over.\n")
+                    outputln(" **** " + turn + " won. ****")
+                    break
+            print(count)
+            # If neither X nor O wins and the board is full, we'll declare the result as 'tie'.
+            if count == 9:
+                printBoard(theBoard)
+                outputln("\nGame Over.\n")
+                outputln("It's a Tie!!")
+                break
+
+            # Now we have to change the player after every move.
+            if turn == 'X':
+                turn = 'O'
+            else:
+                turn = 'X'
+
+        # Now we will ask if player wants to restart the game or not.
+        restart = simpledialog.askstring("", "Do you want to play again? (y/n)")
+        if restart == "y" or restart == "Y":
+            clearOutput()
+            clearBoard()
+        else:
+            clearOutput()
+            outputln("Click Run to play again")
+            break
+
+
+# **************** Put helper methods below *********************
+# Implementation of Two Player Tic-Tac-Toe game in Python.
+
+''' We will make the board using dictionary
+    in which keys will be the location(i.e : top-left,mid-right,etc.)
+    and initialliy it's values will be empty space and then after every move
+    we will change the value according to player's choice of move. '''
+
+theBoard = {'7': ' ', '8': ' ', '9': ' ',
+            '4': ' ', '5': ' ', '6': ' ',
+            '1': ' ', '2': ' ', '3': ' '}
+
+board_keys = []
+
+for key in theBoard:
+    board_keys.append(key)
+
+def clearBoard():
+    for key in board_keys:
+        theBoard[key] = " "
+
+''' We will have to print the updated board after every move in the game and 
+    thus we will make a function in which we'll define the printBoard function
+    so that we can easily print the board everytime by calling this function. '''
+
+def printBoard(board):
+    clearOutput()
+    outputln("\n\n\n\n\n\n\n")
+    outputln("7|8|9|")
+    outputln("4|5|6|")
+    outputln("1|2|3|\n")
+    outputln(board['7'] + '|' + board['8'] + '|' + board['9'] + '|')
+    outputln('-+-+-+')
+    outputln(board['4'] + '|' + board['5'] + '|' + board['6'] + '|')
+    outputln('-+-+-+')
+    outputln(board['1'] + '|' + board['2'] + '|' + board['3'] + '|')
+
+# **************** DO NOT CHANGE ANYTHING BELOW THIS LINE **********************
+root = Tk()
+root.geometry('800x600')
+root.title('AppBuilder')
+
+fields = [None] * len(prompts)
+row_num = 0
+
+for prompt in prompts:
+    label = Label(root, text=prompt)
+    label.grid(row=row_num, column=0, sticky=E, pady=2)
+    fields[row_num] = Entry(root, textvariable=f"{row_num}", width=100)
+    fields[row_num].grid(row=row_num, column=1, pady=2)
+    row_num += 1
+
+def clearOutput():
+    display.delete("1.0", "end")
+
+def outputln(text_to_output):
+    display.insert(END, f'{text_to_output}\n')
+
+def output(text_to_output):
+    display.insert(END, f'{text_to_output}')
+
+buttonFrame = Frame(root)
+
+runButton = Button(buttonFrame, text="Run", command=run)
+runButton.grid(row=row_num, column=0, ipadx=10, pady=5)
+
+clrButton = Button(buttonFrame, text="Clear Output", command=clearOutput)
+clrButton.grid(row=row_num, column=1, ipadx=10, pady=5)
+
+buttonFrame.grid(row=row_num, column=1)
+
+row_num += 1
+display = Text(root)
+display.configure(font=("Courier", 12, "bold"))
+display.grid(row=row_num, column=1)
+
+root.mainloop()
