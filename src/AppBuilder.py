@@ -2,14 +2,11 @@ from tkinter import *
 from tkinter import simpledialog
 
 # Example of how to use the line below: prompts = ["Enter Wage", "Enter Hours Worked"]
-prompts = ["Enter Wage:", "Enter Hours Worked:"]
+prompts = []
 
 # add you code to the run method below:
 def run():
-    wage = float(fields[0].get())
-    hours = float(fields[1].get())
-    pay = hours * wage
-    outputln(f'You earned ${pay:.2f}')
+    pass
 
 # **************** Put helper methods below *********************
 
@@ -23,10 +20,10 @@ row_num = 0
 
 for index, prompt in enumerate(prompts):
     label = Label(root, text=prompt)
-    label.grid(row=row_num, column=0, pady=2, sticky=W)
+    label.grid(row=row_num, column=0, sticky=W)
     row_num += 2
     fields[index] = Entry(root, textvariable=f"{index}", width=100)
-    fields[index].grid(row=row_num, column=0, pady=2, sticky=W)
+    fields[index].grid(row=row_num, column=0, padx=4, sticky=W)
     row_num += 1
 
 def clearOutput():
@@ -53,7 +50,7 @@ buttonFrame.grid(row=row_num, column=0)
 row_num += 1
 display = Text(root)
 display.configure(font=("Courier", 12, "bold"))
-display.grid(row=row_num, column=0)
+display.grid(row=row_num, column=0, padx=4)
 
 root.mainloop()
 
