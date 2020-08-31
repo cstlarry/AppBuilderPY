@@ -3,6 +3,7 @@ from tkinter import simpledialog
 
 # Example of how to use the line below: prompts = ["Enter Wage", "Enter Hours Worked"]
 prompts = []
+fields = [None] * (len(prompts))
 
 # add you code to the run method below:
 def run():
@@ -12,10 +13,9 @@ def run():
 
 # **************** DO NOT CHANGE ANYTHING BELOW THIS LINE **********************
 root = Tk()
-root.geometry('800x600')
+root.geometry('815x600')
 root.title('AppBuilder')
 
-fields = [None] * (len(prompts))
 row_num = 0
 
 for index, prompt in enumerate(prompts):
@@ -24,6 +24,8 @@ for index, prompt in enumerate(prompts):
     row_num += 2
     fields[index] = Entry(root, textvariable=f"{index}", width=100)
     fields[index].grid(row=row_num, column=0, padx=4, sticky=W)
+    if index == 0:
+        fields[index].focus_set()
     row_num += 1
 
 def clearOutput():
