@@ -7,16 +7,29 @@ prompts = []
 fields = [None] * (len(prompts))
 values = [""] * (len(prompts))
 
+
 # add you code to the run method below:
 def run():
-    pass
+    value = float(simpledialog.askstring("", "Enter a temperature:"))
+    command = ""
+
+    while command != "f" and command != "c":
+        command = simpledialog.askstring("", 'convert to F or C : ')
+    if command.lower() == 'f':
+        value = (value * 9 / 5) + 32
+        outputln(f'the equivalent value in Farenheit is: {value}')
+    elif command.lower() == 'c':
+        value = (value - 32) * 5 / 9
+        outputln(f'the equivalent value in Celcius is {value}')
+    else:
+        outputln('wrong input try again')
 
 # **************** Put helper methods below *********************
 
 # **************** DO NOT CHANGE ANYTHING BELOW THIS LINE **********************
 root = Tk()
 root.geometry('815x600')
-root.title('AppBuilder')
+root.title('Convert Temperature App')
 
 row_num = 0
 
@@ -58,4 +71,3 @@ display.configure(font=("Courier", 12, "bold"))
 display.grid(row=row_num, column=0, padx=4)
 
 root.mainloop()
-
