@@ -64,7 +64,7 @@ def run():
     state, capital = random.choice(list(capitals_dict.items()))
 
     while True:
-        question = f"What is the capital of '{state}'? "
+        question = f"What is the capital of '{state}'?"
         guess = simpledialog.askstring("Enter your answer", question)
 
         if guess == "exit":
