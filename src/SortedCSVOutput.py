@@ -58,17 +58,17 @@ def output(text_to_output):
     display.insert(END, f'{text_to_output}')
 
 
-buttonFrame = Frame(root)
+frame = Frame(root)
 
 row_num += 1
 
-runButton = Button(buttonFrame, text="Run", command=run)
+runButton = Button(frame, text="Run", command=run)
 runButton.grid(row=row_num, column=0, ipadx=10, pady=5)
 
-clrButton = Button(buttonFrame, text="Clear Output", command=clearOutput)
+clrButton = Button(frame, text="Clear Output", command=clearOutput)
 clrButton.grid(row=row_num, column=1, ipadx=10, pady=5)
 
-buttonFrame.grid(row=row_num, column=0)
+frame.grid(row=row_num, column=0)
 
 row_num += 1
 display = Text(root)
