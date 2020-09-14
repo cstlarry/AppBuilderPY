@@ -34,6 +34,11 @@ for index, prompt in enumerate(prompts):
 def clearOutput():
     display.delete("1.0", "end")
 
+def clearFields():
+    if len(fields) > 0:
+        for field in fields:
+            field.delete(0, 'end')
+
 def outputln(text_to_output):
     display.insert(END, f'{text_to_output}\n')
 
@@ -45,10 +50,17 @@ frame = Frame(root)
 row_num += 1
 
 runButton = Button(frame, text="Run", command=run)
-runButton.grid(row=row_num, column=0, ipadx=10, pady=5)
+runButton.grid(row=row_num, column=0, ipadx=10, pady=5, padx=5)
 
-clrButton = Button(frame, text="Clear Output", command=clearOutput)
-clrButton.grid(row=row_num, column=1, ipadx=10, pady=5)
+clrOutput = Button(frame, text="Clear Output", command=clearOutput)
+clrOutput.grid(row=row_num, column=1, ipadx=10, pady=5, padx=5)
+
+clrFields = Button(frame, text="Clear Fields", command=clearFields)
+clrFields.grid(row=row_num, column=2, ipadx=10, pady=5, padx=5)
+if len(fields) > 0:
+    clrFields.config(state='normal')
+else:
+    clrFields.config(state="disabled")
 
 frame.grid(row=row_num, column=0)
 
